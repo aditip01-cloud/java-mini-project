@@ -1,5 +1,5 @@
 // File 7 — BankStaff.java
-// Person 4: Polymorphism
+
 // Cashier and Manager both override processTransaction()
 
 public abstract class BankStaff {
@@ -52,6 +52,6 @@ class Manager extends BankStaff {
     public void processTransaction(double amount) {
         System.out.println("  [Manager] " + name + " (" + department + " Dept)"
                 + " → Authorizing transaction of Rs." + amount);
-        System.out.println("  ✔  Manager approval granted.");
+        System.out.println("  Manager approval granted.");
     }
 }
