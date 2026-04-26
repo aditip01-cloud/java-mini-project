@@ -1,7 +1,4 @@
 // File 8 — BankMain.java
-// Person 4: Polymorphism
-// main() — runs everything and demonstrates runtime polymorphism
-// Ties together all 8 files of the Bank Management System
 
 public class BankMain {
 
@@ -23,19 +20,18 @@ public class BankMain {
 
     public static void main(String[] args) {
 
-        System.out.println("╔══════════════════════════════════════════════════╗");
-        System.out.println("║        Bank Management System — OOP Demo         ║");
-        System.out.println("╚══════════════════════════════════════════════════╝");
+        System.out.println("  Bank Management System — OOP Demo   ");
+      
 
-        // ────────────────────────────────────────────────────
+     
         // SECTION 1: Customer (Person 1 — Customer.java)
-        // ────────────────────────────────────────────────────
-        System.out.println("\n══ Customer Details ══════════════════════════════");
+      
+        System.out.println("\nCustomer Details");
 
-        Customer cust1 = new RegularCustomer("C001", "Priya Sharma",
+        Customer cust1 = new RegularCustomer("C1", "Priya ",
                                               "priya@email.com", "9876543210");
-        Customer cust2 = new RegularCustomer("C002", "Rahul Mehta",
-                                              "rahul@email.com", "9123456780");
+        Customer cust2 = new RegularCustomer("C2", "Ronak",
+                                              "ronak@email.com", "9123456780");
 
         System.out.println("\n-- Customer 1 --");
         cust1.getDetails();
@@ -43,11 +39,11 @@ public class BankMain {
         System.out.println("\n-- Customer 2 --");
         cust2.getDetails();
 
-        // ────────────────────────────────────────────────────
+       
         // SECTION 2: BankAccount — SavingsAccount
         //            (Person 1 — BankAccount.java)
         //            (Person 2 — SavingsAccount.java)
-        // ────────────────────────────────────────────────────
+        
         System.out.println("\n══ Savings Account Operations ════════════════════");
 
         SavingsAccount savings = new SavingsAccount(
@@ -69,12 +65,12 @@ public class BankMain {
         System.out.println("\n-- Final Balance --");
         savings.getBalance();
 
-        // ────────────────────────────────────────────────────
+       
         // SECTION 3: BankAccount — CurrentAccount
         //            (Person 1 — BankAccount.java)
         //            (Person 2 — CurrentAccount.java)
-        // ────────────────────────────────────────────────────
-        System.out.println("\n══ Current Account Operations ════════════════════");
+       
+        System.out.println("\n Current Account Operations");
 
         CurrentAccount current = new CurrentAccount(
                 "CA-2001", cust2.name, 8000.00, 3000.00);
@@ -96,11 +92,11 @@ public class BankMain {
         System.out.println("\n-- Final Balance --");
         current.getBalance();
 
-        // ────────────────────────────────────────────────────
+       
         // SECTION 4: Transaction Interface (Person 3 — Transaction.java)
         //            Demonstrated via anonymous class
-        // ────────────────────────────────────────────────────
-        System.out.println("\n══ Transaction Interface Demo ════════════════════");
+      
+        System.out.println("\n Transaction Interface Demo");
 
         Transaction txn = new Transaction() {
             @Override
@@ -128,11 +124,11 @@ public class BankMain {
         txn.withdraw();
         txn.transfer();
 
-        // ────────────────────────────────────────────────────
+       
         // SECTION 5: Loan Interface (Person 3 — Loan.java)
         //            Demonstrated via anonymous class
-        // ────────────────────────────────────────────────────
-        System.out.println("\n══ Loan Interface Demo ════════════════════════════");
+       
+        System.out.println("\n Loan Interface Demo ");
 
         Loan loan = new Loan() {
             private double loanAmount  = 50000.00;
@@ -173,13 +169,13 @@ public class BankMain {
         loan.repayLoan();
         loan.getLoanStatus();
 
-        // ────────────────────────────────────────────────────
+      
         // SECTION 6: Runtime Polymorphism — BankStaff
         //            (Person 4 — BankStaff.java)
-        // ────────────────────────────────────────────────────
-        System.out.println("\n══ Staff Transactions — Runtime Polymorphism ══════");
+      
+        System.out.println("\n Staff Transactions — Runtime Polymorphism ");
 
-        // BankStaff[] holds both Cashier and Manager → polymorphism
+        // BankStaff[] holds both Cashier and Manager --- polymorphism
         BankStaff[] staffMembers = {
             new Cashier("Anita Desai",  301, "C-1"),
             new Cashier("Vijay Kumar",  302, "C-3"),
@@ -196,11 +192,11 @@ public class BankMain {
             staffMembers[i].processTransaction(transactionAmounts[i]);
         }
 
-        // ────────────────────────────────────────────────────
+       
         // SECTION 7: Polymorphic BankAccount reference
         //            (shows upcasting — Person 1 + 2)
-        // ────────────────────────────────────────────────────
-        System.out.println("\n══ Polymorphic BankAccount Reference ═════════════");
+      
+        System.out.println("\n Polymorphic BankAccount Reference ");
 
         // BankAccount reference holds different subclass objects
         BankAccount[] accounts = {
