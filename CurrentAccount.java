@@ -1,13 +1,17 @@
+// CurrentAccount extends BankAccount (supports overdraft)
+
 public class CurrentAccount extends BankAccount {
 
-    private double overdraftLimit;
+    private double overdraftLimit; // extra amount allowed beyond balance
 
+    // Constructor
     public CurrentAccount(String accountNumber, String accountHolder,
                           double initialBalance, double overdraftLimit) {
         super(accountNumber, accountHolder, initialBalance);
         this.overdraftLimit = overdraftLimit;
     }
 
+    // Deposit method
     @Override
     public void deposit(double amount) {
         if (amount <= 0) {
@@ -18,28 +22,42 @@ public class CurrentAccount extends BankAccount {
         System.out.println("Deposited Rs." + amount + " | New Balance: Rs." + balance);
     }
 
+    // Withdraw method with overdraft support
     @Override
     public void withdraw(double amount) {
         if (amount <= 0) {
             System.out.println("Withdrawal amount must be positive.");
             return;
         }
+
+        // Allow withdrawal up to (balance + overdraftLimit)
         if (amount > balance + overdraftLimit) {
-            System.out.println("Exceeds overdraft limit!");
+            System.out.println("Exceeds overdraft limit! Available: Rs." + (balance + overdraftLimit));
             return;
         }
+
         balance -= amount;
         System.out.println("Withdrawn Rs." + amount + " | Remaining Balance: Rs." + balance);
+
+        if (balance < 0) {
+            System.out.println("Warning: Account is in overdraft by Rs." + Math.abs(balance));
+        }
     }
 
+    // Return account type
     @Override
     public String getAccountType() {
         return "Current Account";
     }
 
-    // ✅ MUST BE INSIDE CLASS
+    // Display balance
     @Override
     public void getBalance() {
         System.out.println("Current Balance: Rs." + balance);
+    }
+
+    // Getter for overdraft limit
+    public double getOverdraftLimit() {
+        return overdraftLimit;
     }
 }
