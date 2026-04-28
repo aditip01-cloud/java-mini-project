@@ -1,8 +1,9 @@
-// File 8 — BankMain.java
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class BankMain {
 
-    // Concrete subclass of abstract Customer (Person 1 — Customer.java)
+    // Concrete Customer class
     static class RegularCustomer extends Customer {
         public RegularCustomer(String customerId, String name,
                                String email, String phoneNumber) {
@@ -20,197 +21,131 @@ public class BankMain {
 
     public static void main(String[] args) {
 
-        System.out.println("  Bank Management System — OOP Demo   ");
-      
+        Scanner sc = new Scanner(System.in);
 
-     
-        // SECTION 1: Customer (Person 1 — Customer.java)
-      
-        System.out.println("\nCustomer Details");
+        // ArrayLists
+        ArrayList<Customer> customers = new ArrayList<>();
+        ArrayList<BankStaff> staffList = new ArrayList<>();
 
-        Customer cust1 = new RegularCustomer("C1", "Priya ",
-                                              "priya@email.com", "9876543210");
-        Customer cust2 = new RegularCustomer("C2", "Ronak",
-                                              "ronak@email.com", "9123456780");
+        int choice;
 
-        System.out.println("\n-- Customer 1 --");
-        cust1.getDetails();
+        do {
+            System.out.println("\n===== BANK MANAGEMENT SYSTEM =====");
+            System.out.println("1. Add Customer");
+            System.out.println("2. View Customers");
+            System.out.println("3. Add Staff");
+            System.out.println("4. View Staff");
+            System.out.println("5. Savings Account Demo");
+            System.out.println("6. Current Account Demo");
+            System.out.println("0. Exit");
+            System.out.print("Enter choice: ");
+            choice = sc.nextInt();
+            sc.nextLine(); // clear buffer
 
-        System.out.println("\n-- Customer 2 --");
-        cust2.getDetails();
+            switch (choice) {
 
-       
-        // SECTION 2: BankAccount — SavingsAccount
-        //            (Person 1 — BankAccount.java)
-        //            (Person 2 — SavingsAccount.java)
-        
-        System.out.println("\n══ Savings Account Operations ════════════════════");
+                // ✅ ADD CUSTOMER
+                case 1:
+                    System.out.print("Enter Customer ID: ");
+                    String id = sc.nextLine();
 
-        SavingsAccount savings = new SavingsAccount(
-                "SA-1001", cust1.name, 10000.00, 0.04);
+                    System.out.print("Enter Name: ");
+                    String name = sc.nextLine();
 
-        System.out.println("\n-- Account Info --");
-        savings.displayAccountInfo();
-        System.out.println("Account Type : " + savings.getAccountType());
+                    System.out.print("Enter Email: ");
+                    String email = sc.nextLine();
 
-        System.out.println("\n-- Deposit --");
-        savings.deposit(5000.00);
+                    System.out.print("Enter Phone: ");
+                    String phone = sc.nextLine();
 
-        System.out.println("\n-- Withdraw --");
-        savings.withdraw(3000.00);
+                    Customer c = new RegularCustomer(id, name, email, phone);
+                    customers.add(c);
 
-        System.out.println("\n-- Apply Annual Interest (4%) --");
-        savings.applyInterest();
+                    System.out.println("✅ Customer added successfully!");
+                    break;
 
-        System.out.println("\n-- Final Balance --");
-        savings.getBalance();
+                // ✅ VIEW CUSTOMERS
+                case 2:
+                    if (customers.isEmpty()) {
+                        System.out.println("No customers found.");
+                    } else {
+                        for (Customer cust : customers) {
+                            System.out.println("\n--- Customer ---");
+                            cust.getDetails();
+                        }
+                    }
+                    break;
 
-       
-        // SECTION 3: BankAccount — CurrentAccount
-        //            (Person 1 — BankAccount.java)
-        //            (Person 2 — CurrentAccount.java)
-       
-        System.out.println("\n Current Account Operations");
+                // ✅ ADD STAFF
+                case 3:
+                    System.out.print("Enter Staff Name: ");
+                    String sName = sc.nextLine();
 
-        CurrentAccount current = new CurrentAccount(
-                "CA-2001", cust2.name, 8000.00, 3000.00);
+                    System.out.print("Enter Employee ID: ");
+                    int empId = sc.nextInt();
+                    sc.nextLine();
 
-        System.out.println("\n-- Account Info --");
-        current.displayAccountInfo();
-        System.out.println("Account Type   : " + current.getAccountType());
-        System.out.println("Overdraft Limit: Rs." + current.getOverdraftLimit());
+                    System.out.print("1. Cashier | 2. Manager: ");
+                    int type = sc.nextInt();
+                    sc.nextLine();
 
-        System.out.println("\n-- Deposit --");
-        current.deposit(2000.00);
+                    if (type == 1) {
+                        System.out.print("Enter Counter Number: ");
+                        String counter = sc.nextLine();
+                        staffList.add(new Cashier(sName, empId, counter));
+                    } else {
+                        System.out.print("Enter Department: ");
+                        String dept = sc.nextLine();
+                        staffList.add(new Manager(sName, empId, dept));
+                    }
 
-        System.out.println("\n-- Normal Withdrawal --");
-        current.withdraw(4000.00);
+                    System.out.println("✅ Staff added successfully!");
+                    break;
 
-        System.out.println("\n-- Overdraft Withdrawal --");
-        current.withdraw(9000.00); // exceeds balance, uses overdraft
+                // ✅ VIEW STAFF
+                case 4:
+                    if (staffList.isEmpty()) {
+                        System.out.println("No staff found.");
+                    } else {
+                        for (BankStaff staff : staffList) {
+                            System.out.println("\n--- Staff ---");
+                            staff.displayInfo();
+                            staff.processTransaction(5000); // demo
+                        }
+                    }
+                    break;
 
-        System.out.println("\n-- Final Balance --");
-        current.getBalance();
+                // ✅ SAVINGS ACCOUNT DEMO
+                case 5:
+                    SavingsAccount savings = new SavingsAccount(
+                            "SA-101", "Demo User", 10000, 0.04);
 
-       
-        // SECTION 4: Transaction Interface (Person 3 — Transaction.java)
-        //            Demonstrated via anonymous class
-      
-        System.out.println("\n Transaction Interface Demo");
+                    savings.deposit(2000);
+                    savings.withdraw(1000);
+                    savings.applyInterest();
+                    savings.getBalance();
+                    break;
 
-        Transactional txn = new Transactional()  {
-            @Override
-            public void deposit() {
-                System.out.println("  [Transaction] deposit() called → Rs.2000 deposited.");
-                savings.deposit(2000);
+                // ✅ CURRENT ACCOUNT DEMO
+                case 6:
+                    CurrentAccount current = new CurrentAccount(
+                            "CA-201", "Demo User", 5000, 3000);
+
+                    current.deposit(2000);
+                    current.withdraw(7000); // overdraft
+                    current.getBalance();
+                    break;
+
+                case 0:
+                    System.out.println("Exiting... Thank you!");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice!");
             }
 
-            @Override
-            public void withdraw() {
-                System.out.println("  [Transaction] withdraw() called → Rs.1000 withdrawn.");
-                savings.withdraw(1000);
-            }
+        } while (choice != 0);
 
-            @Override
-            public void transfer() {
-                System.out.println("  [Transaction] transfer() called → Rs.500 transferred.");
-                savings.withdraw(500);
-                current.deposit(500);
-                System.out.println("  Transfer complete: Rs.500 moved from Savings → Current.");
-            }
-        };
-
-        txn.deposit();
-        txn.withdraw();
-        txn.transfer();
-
-       
-        // SECTION 5: Loan Interface (Person 3 — Loan.java)
-        //            Demonstrated via anonymous class
-       
-        System.out.println("\n Loan Interface Demo ");
-
-        Loanable loan = new Loanable() {
-            private double loanAmount  = 50000.00;
-            private double amountPaid  = 0.00;
-            private boolean active     = false;
-
-            @Override
-            public void applyLoan() {
-                active = true;
-                System.out.println("  [Loan] Loan of Rs." + loanAmount
-                        + " applied for " + cust1.name + ".");
-                System.out.println("  Loan Status: ACTIVE");
-            }
-
-            @Override
-            public void repayLoan() {
-                double repayment = 20000.00;
-                amountPaid += repayment;
-                System.out.println("  [Loan] Repayment of Rs." + repayment + " made.");
-                System.out.println("  Remaining  : Rs." + (loanAmount - amountPaid));
-                if (amountPaid >= loanAmount) {
-                    active = false;
-                    System.out.println("  Loan fully repaid!");
-                }
-            }
-
-            @Override
-            public void getLoanStatus() {
-                System.out.println("  [Loan Status]");
-                System.out.println("  Total Loan : Rs." + loanAmount);
-                System.out.println("  Paid So Far: Rs." + amountPaid);
-                System.out.println("  Remaining  : Rs." + (loanAmount - amountPaid));
-                System.out.println("  Active     : " + (active ? "YES" : "NO"));
-            }
-        };
-
-        loan.applyLoan();
-        loan.repayLoan();
-        loan.getLoanStatus();
-
-      
-        // SECTION 6: Runtime Polymorphism — BankStaff
-        //            (Person 4 — BankStaff.java)
-      
-        System.out.println("\n Staff Transactions — Runtime Polymorphism ");
-
-        // BankStaff[] holds both Cashier and Manager --- polymorphism
-        BankStaff[] staffMembers = {
-            new Cashier("Anita Desai",  301, "C-1"),
-            new Cashier("Vijay Kumar",  302, "C-3"),
-            new Manager("Sneha Patil",  401, "Operations"),
-            new Manager("Arjun Nair",   402, "Compliance")
-        };
-
-        double[] transactionAmounts = { 8000.00, 75000.00, 120000.00, 500000.00 };
-
-        for (int i = 0; i < staffMembers.length; i++) {
-            System.out.println();
-            staffMembers[i].displayInfo();
-            // Same method call → different behaviour based on actual object type
-            staffMembers[i].processTransaction(transactionAmounts[i]);
-        }
-
-       
-        // SECTION 7: Polymorphic BankAccount reference
-        //            (shows upcasting — Person 1 + 2)
-      
-        System.out.println("\n Polymorphic BankAccount Reference ");
-
-        // BankAccount reference holds different subclass objects
-        BankAccount[] accounts = {
-            new SavingsAccount("SA-3001", "Meera Joshi",  15000.00, 0.05),
-            new CurrentAccount("CA-4001", "Suresh Gupta", 20000.00, 5000.00)
-        };
-
-        for (BankAccount acc : accounts) {
-            System.out.println("\n-- " + acc.getAccountType() + " --");
-            acc.displayAccountInfo();
-            acc.deposit(3000.00);
-            acc.withdraw(1500.00);
-            acc.getBalance();
-        }
-
-            }
+        sc.close();
+    }
 }
