@@ -1,7 +1,3 @@
-// File 7 — BankStaff.java
-
-// Cashier and Manager both override processTransaction()
-
 public abstract class BankStaff {
     protected String name;
     protected int employeeId;
@@ -11,7 +7,6 @@ public abstract class BankStaff {
         this.employeeId = employeeId;
     }
 
-    // Overridden by Cashier and Manager — runtime polymorphism
     public void processTransaction(double amount) {
         System.out.println(name + " is processing a transaction of Rs." + amount);
     }
@@ -22,6 +17,7 @@ public abstract class BankStaff {
     }
 }
 
+// ✅ REMOVE "public" from these (IMPORTANT)
 class Cashier extends BankStaff {
     private String counterNumber;
 
@@ -32,11 +28,8 @@ class Cashier extends BankStaff {
 
     @Override
     public void processTransaction(double amount) {
-        System.out.println("  [Cashier] " + name + " at Counter " + counterNumber
-                + " → Processing cash transaction of Rs." + amount);
-        if (amount > 50000) {
-            System.out.println("  ⚠  High-value cash transaction — flagged for review.");
-        }
+        System.out.println("[Cashier] " + name + " at Counter " + counterNumber +
+                " → Processing Rs." + amount);
     }
 }
 
@@ -50,8 +43,7 @@ class Manager extends BankStaff {
 
     @Override
     public void processTransaction(double amount) {
-        System.out.println("  [Manager] " + name + " (" + department + " Dept)"
-                + " → Authorizing transaction of Rs." + amount);
-        System.out.println("  Manager approval granted.");
+        System.out.println("[Manager] " + name + " (" + department +
+                ") → Approving Rs." + amount);
     }
 }
