@@ -1,8 +1,6 @@
-interface Transaction
-  {
+interface Transactional {
     void deposit();
     void withdraw();
     void transfer();
-  }
-
+}
 

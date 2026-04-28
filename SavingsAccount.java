@@ -51,3 +51,7 @@ public class SavingsAccount extends BankAccount {
         return interestRate;
     }
 }
+@Override
+public void getBalance() {
+    System.out.println("Current Balance: Rs." + balance);
+}

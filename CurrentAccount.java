@@ -48,3 +48,7 @@ public class CurrentAccount extends BankAccount {
         return overdraftLimit;
     }
 }
+@Override
+public void getBalance() {
+    System.out.println("Current Balance: Rs." + balance);
+}

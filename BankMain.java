@@ -98,7 +98,7 @@ public class BankMain {
       
         System.out.println("\n Transaction Interface Demo");
 
-        Transaction txn = new Transaction() {
+        Transactional txn = new Transactional()  {
             @Override
             public void deposit() {
                 System.out.println("  [Transaction] deposit() called → Rs.2000 deposited.");
@@ -130,7 +130,7 @@ public class BankMain {
        
         System.out.println("\n Loan Interface Demo ");
 
-        Loan loan = new Loan() {
+        Loanable loan = new Loanable() {
             private double loanAmount  = 50000.00;
             private double amountPaid  = 0.00;
             private boolean active     = false;
