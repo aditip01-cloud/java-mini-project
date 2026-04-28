@@ -1,10 +1,7 @@
-// SavingsAccount extends BankAccount
-
 public class SavingsAccount extends BankAccount {
 
-    private double interestRate; // e.g. 0.04 = 4% per year
+    private double interestRate;
 
-    // Constructor
     public SavingsAccount(String accountNumber, String accountHolder,
                           double initialBalance, double interestRate) {
         super(accountNumber, accountHolder, initialBalance);
@@ -40,18 +37,15 @@ public class SavingsAccount extends BankAccount {
         return "Savings Account";
     }
 
-    //adding yearly interest to balance
+    // ✅ MUST BE INSIDE CLASS
+    @Override
+    public void getBalance() {
+        System.out.println("Current Balance: Rs." + balance);
+    }
+
     public void applyInterest() {
         double interest = balance * interestRate;
         balance += interest;
         System.out.println("Interest of Rs." + interest + " applied. New Balance: Rs." + balance);
     }
-
-    public double getInterestRate() {
-        return interestRate;
-    }
-}
-@Override
-public void getBalance() {
-    System.out.println("Current Balance: Rs." + balance);
 }
