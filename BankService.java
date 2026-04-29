@@ -32,7 +32,7 @@ public class BankService {
             accounts.add(new CurrentAccount(accNo, name, balance, 2000));
         }
 
-        System.out.println("✅ Account Created!");
+        System.out.println("Account Created!");
     }
 
     // Perform deposit/withdraw
