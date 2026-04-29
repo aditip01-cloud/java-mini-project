@@ -1,23 +1,21 @@
-public abstract class BankAccount {
+// Abstract class (common structure for all accounts (Abstraction))
+public abstract class BankAccount implements Transactional {
 
     protected String accountNumber;
-    protected String accountHolderName;
+    protected String accountHolder;
     protected double balance;
 
-    public BankAccount(String accountNumber, String accountHolderName, double initialBalance) {
-        this.accountNumber = accountNumber;
-        this.accountHolderName = accountHolderName;
-        this.balance = initialBalance;
+    // Constructor
+    public BankAccount(String accNo, String holder, double balance) {
+        this.accountNumber = accNo;
+        this.accountHolder = holder;
+        this.balance = balance;
     }
 
-    public abstract void deposit(double amount);
-    public abstract void withdraw(double amount);
-    public abstract void getBalance();
-    public abstract String getAccountType();
-
+    // Common method for all accounts
     public void displayAccountInfo() {
-        System.out.println("Account Number: " + accountNumber);
-        System.out.println("Account Holder: " + accountHolderName);
+        System.out.println("Account No: " + accountNumber);
+        System.out.println("Name: " + accountHolder);
         System.out.println("Balance: Rs." + balance);
     }
 }

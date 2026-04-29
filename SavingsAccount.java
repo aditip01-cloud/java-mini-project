@@ -1,51 +1,86 @@
-public class SavingsAccount extends BankAccount {
+import java.util.*;
 
-    private double interestRate;
+// SavingsAccount (inherits BankAccount + implements Loanable)
+public class SavingsAccount extends BankAccount implements Loanable {
 
-    public SavingsAccount(String accountNumber, String accountHolder,
-                          double initialBalance, double interestRate) {
-        super(accountNumber, accountHolder, initialBalance);
-        this.interestRate = interestRate;
+    private boolean hasLoan = false;
+    private double loanAmount, totalPayable;
+    private int years;
+
+    public SavingsAccount(String accNo, String holder, double bal, double rate) {
+        super(accNo, holder, bal);
     }
 
+    // Deposit implementation
     @Override
-    public void deposit(double amount) {
-        if (amount <= 0) {
-            System.out.println("Deposit amount must be positive.");
+    public void deposit(double amt) {
+        balance += amt;
+        System.out.println("Deposited Rs." + amt);
+    }
+
+    // Withdraw implementation
+    @Override
+    public void withdraw(double amt) {
+        if (amt > balance)
+            System.out.println("Insufficient balance!");
+        else {
+            balance -= amt;
+            System.out.println("Withdrawn Rs." + amt);
+        }
+    }
+
+    // Apply loan
+    @Override
+    public void applyLoan() {
+
+        Scanner sc = new Scanner(System.in);
+
+        // Eligibility check
+        if (balance < 5000) {
+            System.out.println("Not eligible for loan!");
             return;
         }
-        balance += amount;
-        System.out.println("Deposited Rs." + amount + " | New Balance: Rs." + balance);
+
+        System.out.print("Loan Amount: ");
+        loanAmount = sc.nextDouble();
+
+        System.out.print("Years: ");
+        years = sc.nextInt();
+
+        double rate = 0.1;
+
+        // Simple interest calculation
+        totalPayable = loanAmount * (1 + rate * years);
+
+        hasLoan = true;
+
+        System.out.println("Loan Approved! Total Payable: Rs." + totalPayable);
     }
 
+    // Repay loan
     @Override
-    public void withdraw(double amount) {
-        if (amount <= 0) {
-            System.out.println("Withdrawal amount must be positive.");
+    public void repayLoan() {
+
+        if (!hasLoan) {
+            System.out.println("No active loan!");
             return;
         }
-        if (amount > balance) {
-            System.out.println("Insufficient funds! Balance: Rs." + balance);
-            return;
+
+        if (balance >= totalPayable) {
+            balance -= totalPayable;
+            hasLoan = false;
+            System.out.println("Loan repaid!");
+        } else {
+            System.out.println("Not enough balance!");
         }
-        balance -= amount;
-        System.out.println("Withdrawn Rs." + amount + " | Remaining Balance: Rs." + balance);
     }
 
+    // Loan status
     @Override
-    public String getAccountType() {
-        return "Savings Account";
-    }
-
-    // ✅ MUST BE INSIDE CLASS
-    @Override
-    public void getBalance() {
-        System.out.println("Current Balance: Rs." + balance);
-    }
-
-    public void applyInterest() {
-        double interest = balance * interestRate;
-        balance += interest;
-        System.out.println("Interest of Rs." + interest + " applied. New Balance: Rs." + balance);
+    public void getLoanStatus() {
+        if (!hasLoan)
+            System.out.println("No active loan.");
+        else
+            System.out.println("Loan: Rs." + loanAmount + " | Payable: Rs." + totalPayable);
     }
 }
