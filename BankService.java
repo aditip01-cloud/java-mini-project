@@ -113,36 +113,26 @@ public class BankService {
         return null;
     }
 
-    public fd()
+    public void fd()
     {
         
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         System.out.println("=== Fixed Deposit Registration ===");
 
         // Name
         System.out.print("Enter client name: ");
-        String name = scanner.nextLine();
+        String name = sc.nextLine();
 
-        // Date of birth with validation
-        LocalDate dob = null;
-        while (dob == null) {
-            System.out.print("Enter date of birth (dd/MM/yyyy): ");
-            String dobInput = scanner.nextLine();
-            try {
-                dob = LocalDate.parse(dobInput, formatter);
-            } catch (DateTimeParseException e) {
-                System.out.println("  Invalid format. Please use dd/MM/yyyy (e.g. 15/04/1965)");
-            }
-        }
+        //age 
+        System.out.println("Enter age");
+        int age = sc.nextInt();
 
         // Principal amount with validation
         double principal = 0;
         while (principal <= 0) {
             System.out.print("Enter principal amount (₹): ");
             try {
-                principal = Double.parseDouble(scanner.nextLine());
+                principal = Double.parseDouble(sc.nextLine());
                 if (principal <= 0) System.out.println("  Amount must be greater than 0.");
             } catch (NumberFormatException e) {
                 System.out.println("  Please enter a valid number.");
@@ -154,7 +144,7 @@ public class BankService {
         while (duration <= 0) {
             System.out.print("Enter duration (in months): ");
             try {
-                duration = Integer.parseInt(scanner.nextLine());
+                duration = Integer.parseInt(sc.nextLine());
                 if (duration <= 0) System.out.println("  Duration must be at least 1 month.");
             } catch (NumberFormatException e) {
                 System.out.println("  Please enter a whole number.");
@@ -162,18 +152,19 @@ public class BankService {
         }
 
         // Create objects
-        Client client = new Client(name, dob);
-        FixedDeposit fd = new FixedDeposit(principal, duration, client);
+        //Client client = new Client(name,  age);
+        FixedDeposit fd = new FixedDeposit(principal, duration, age);
 
         // Display summary
         System.out.println("\n=== Fixed Deposit Summary ===");
-        System.out.println("Client Name   : " + client.getName());
-        System.out.println("Age           : " + client.getAge() + " years");
+        System.out.println("Client Name   : " + name);
+        System.out.println("Age           : " + age + " years");
         System.out.println("Principal     : ₹" + principal);
         System.out.println("Duration      : " + duration + " months");
         System.out.println("Interest Rate : " + fd.getInterestRate() + "%");
         System.out.printf("Interest Earned: ₹%.2f%n", fd.calculateInterest());
         System.out.printf("Maturity Amount: ₹%.2f%n", principal + fd.calculateInterest());
+
 
         
     }
