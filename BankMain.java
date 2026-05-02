@@ -18,7 +18,8 @@ public class BankMain {
             System.out.println("2. Perform Transaction");
             System.out.println("3. View Accounts");
             System.out.println("4. Loan Services");
-            System.out.println("5. Exit");
+            System.out.println("5. Ceate a Fixed Deposit");
+            System.out.println("6. Exit");
             System.out.print("Enter choice: ");
 
             choice = sc.nextInt();
@@ -41,13 +42,17 @@ public class BankMain {
                     break;
 
                 case 5:
-                    System.out.println("Thank you!");
+                    service.fd(); // fixed deposit creation
+                    break;
+
+                case 6:
+                    System.out.println("Thank you!"); // exit case
                     break;
 
                 default:
                     System.out.println("Invalid choice!");
             }
 
-        } while (choice != 5);
+        } while (choice != 6);
     }
 }

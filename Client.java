@@ -8,7 +8,7 @@ public class Client {
     }
 
     public int getAge() {
-        return Period.between(dateOfBirth, LocalDate.now()).getYears();
+        return Period.between(dateOfBirth, LocalDate.now()).getYears(); // calculating age from date of birth
     }
 
    
