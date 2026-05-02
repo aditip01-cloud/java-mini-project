@@ -1,7 +1,4 @@
 import java.util.*;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 public class BankService {
 
@@ -30,7 +27,7 @@ public class BankService {
             accounts.add(new CurrentAccount(accNo, name, balance, 2000));
         }
 
-        System.out.println("\nAccount Created!");
+        System.out.println("Account Created!");
     }
 
     public void performTransaction() {
@@ -112,62 +109,39 @@ public class BankService {
         }
         return null;
     }
+    
 
-    public void fd()
-    {
-        
+   public void fd() {
 
-        System.out.println("=== Fixed Deposit Registration ===");
+    System.out.println("=== Fixed Deposit ===");
 
-        // Name
-        System.out.print("Enter client name: ");
-        String name = sc.nextLine();
+    System.out.print("Enter name: ");
+    String name = sc.next();
 
-        //age 
-        System.out.println("Enter age");
-        int age = sc.nextInt();
+    System.out.print("Enter age: ");
+    int age = sc.nextInt();
 
-        // Principal amount with validation
-        double principal = 0;
-        while (principal <= 0) {
-            System.out.print("Enter principal amount (₹): ");
-            try {
-                principal = Double.parseDouble(sc.nextLine());
-                if (principal <= 0) System.out.println("  Amount must be greater than 0.");
-            } catch (NumberFormatException e) {
-                System.out.println("  Please enter a valid number.");
-            }
-        }
+    double principal;
+    System.out.print("Enter amount: ");
+    principal = sc.nextDouble();
 
-        // Duration with validation
-        int duration = 0;
-        while (duration <= 0) {
-            System.out.print("Enter duration (in months): ");
-            try {
-                duration = Integer.parseInt(sc.nextLine());
-                if (duration <= 0) System.out.println("  Duration must be at least 1 month.");
-            } catch (NumberFormatException e) {
-                System.out.println("  Please enter a whole number.");
-            }
-        }
-
-        // Create objects
-        //Client client = new Client(name,  age);
-        FixedDeposit fd = new FixedDeposit(principal, duration, age);
-
-        // Display summary
-        System.out.println("\n=== Fixed Deposit Summary ===");
-        System.out.println("Client Name   : " + name);
-        System.out.println("Age           : " + age + " years");
-        System.out.println("Principal     : ₹" + principal);
-        System.out.println("Duration      : " + duration + " months");
-        System.out.println("Interest Rate : " + fd.getInterestRate() + "%");
-        System.out.printf("Interest Earned: ₹%.2f%n", fd.calculateInterest());
-        System.out.printf("Maturity Amount: ₹%.2f%n", principal + fd.calculateInterest());
-
-
-        
+    while (principal <= 0) {
+        System.out.println("Enter valid amount:");
+        principal = sc.nextDouble();
     }
+
+    int duration;
+    System.out.print("Enter duration (months): ");
+    duration = sc.nextInt();
+
+    while (duration <= 0) {
+        System.out.println("Enter valid duration:");
+        duration = sc.nextInt();
+    }
+
+    FixedDeposit fd = new FixedDeposit(principal, duration, age);
+
+    System.out.println("Interest Rate: " + fd.getInterestRate());
+    System.out.println("Interest: " + fd.calculateInterest());
+    System.out.println("Total: " + (principal + fd.calculateInterest()));
 }
-    
-    
