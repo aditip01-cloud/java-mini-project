@@ -18,7 +18,7 @@ public class BankMain {
             System.out.println("2. Perform Transaction");
             System.out.println("3. View Accounts");
             System.out.println("4. Loan Services");
-            System.out.println("5. Ceate a Fixed Deposit");
+            System.out.println("5. Create a Fixed Deposit");
             System.out.println("6. Exit");
             System.out.print("Enter choice: ");
 
