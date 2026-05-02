@@ -145,3 +145,4 @@ public class BankService {
     System.out.println("Interest: " + fd.calculateInterest());
     System.out.println("Total: " + (principal + fd.calculateInterest()));
 }
+}
