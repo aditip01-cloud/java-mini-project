@@ -116,6 +116,7 @@ public class BankService {
     System.out.println("=== Fixed Deposit ===");
 
     System.out.print("Enter name: ");
+    sc.next();
     String name = sc.nextLine();
 
     System.out.print("Enter age: ");
